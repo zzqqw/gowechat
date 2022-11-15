@@ -32,14 +32,14 @@ func NewContactClinet(wk WechatWork) *contactClinet {
 	cc := contactClinet{*c}
 	cc.Token.SetGetTokenFunc(cc.getToken)
 	go cc.Token.TokenRefresher(context.Background())
-	cc.SetWithGetReq(withAccessToken{AccessToken: cc.Token.GetTokenStr()})
+	cc.SetUrlQuery(withAccessToken{AccessToken: cc.Token.GetTokenStr()})
 	return &cc
 }
 
 func (c *contactClinet) getToken() (client.TokenInfo, error) {
 	var object = accessTokenResp{}
 	var req = accessTokenReq{CorpID: c.WxId, CorpSecret: c.WxSecret}
-	err := c.Requests.SetPath("/cgi-bin/gettoken").SetBaseURL(workBaseUrl).SetGetReq(req).GetForObject(&object)
+	err := c.HttpGetAssign("/cgi-bin/gettoken", req, &object)
 	if err != nil {
 		return client.TokenInfo{}, err
 	}
