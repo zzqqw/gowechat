@@ -35,7 +35,7 @@ type userGetResp struct {
 // Get https://developer.work.weixin.qq.com/document/path/90196
 func (u User) Get(userId string) (userGetResp, error) {
 	var resp userGetResp
-	err := u.HttpGetAssign("/cgi-bin/user/get", UserIdReq{userId}, &resp)
+	err := u.HttpGetAssign("/cgi-bin/user/get", UserIds{userId}, &resp)
 	if err != nil {
 		return userGetResp{}, err
 	}
@@ -61,7 +61,7 @@ func (u User) Update(req UserUpdateReq) (client.BaseResp, error) {
 // Delete https://developer.work.weixin.qq.com/document/path/90198
 func (u User) Delete(userId string) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := u.HttpGetAssign("/cgi-bin/user/delete", UserIdReq{userId}, &resp)
+	err := u.HttpGetAssign("/cgi-bin/user/delete", UserIds{userId}, &resp)
 	if err != nil {
 		return client.BaseResp{}, err
 	}
@@ -87,7 +87,7 @@ func (u User) BatchDelete(UseridList []string) (client.BaseResp, error) {
 // Simplelist  https://developer.work.weixin.qq.com/document/path/90200
 func (u User) Simplelist(DepartmentId string) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := u.HttpGetAssign("/cgi-bin/user/simplelist", DepartmentIdReq{DepartmentId: DepartmentId}, &resp)
+	err := u.HttpGetAssign("/cgi-bin/user/simplelist", DepartmentIds{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
 		return client.BaseResp{}, err
 	}
@@ -103,7 +103,7 @@ type userListResp struct {
 // List https://developer.work.weixin.qq.com/document/path/90201
 func (u User) List(DepartmentId string) (userListResp, error) {
 	var resp userListResp
-	err := u.HttpGetAssign("/cgi-bin/user/simplelist", DepartmentIdReq{DepartmentId: DepartmentId}, &resp)
+	err := u.HttpGetAssign("/cgi-bin/user/simplelist", DepartmentIds{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
 		return userListResp{}, err
 	}
@@ -119,7 +119,7 @@ type UserConverToOpenidResp struct {
 // ConvertToOpenid  https://developer.work.weixin.qq.com/document/path/90202
 func (u User) ConvertToOpenid(userId string) (UserConverToOpenidResp, error) {
 	var resp UserConverToOpenidResp
-	err := u.HttpGetAssign("/cgi-bin/user/convert_to_openid", UserIdReq{userId}, &resp)
+	err := u.HttpPostJsonAssign("/cgi-bin/user/convert_to_openid", UserIds{userId}, &resp)
 	if err != nil {
 		return UserConverToOpenidResp{}, err
 	}
@@ -130,9 +130,28 @@ func (u User) ConvertToOpenid(userId string) (UserConverToOpenidResp, error) {
 // Authsucc  https://developer.work.weixin.qq.com/document/path/90203
 func (u User) Authsucc(userId string) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := u.HttpGetAssign("/cgi-bin/user/authsucc", UserIdReq{userId}, &resp)
+	err := u.HttpGetAssign("/cgi-bin/user/authsucc", UserIds{userId}, &resp)
 	if err != nil {
 		return client.BaseResp{}, err
+	}
+	return resp, nil
+}
+
+type userGetUserIdReq struct {
+	Mobile string `json:"mobile"`
+}
+type UserGetUserIdResp struct {
+	client.BaseResp
+	UserIds
+}
+
+// GetUserId Getuserid 手机号获取userid
+// GetUserId  https://developer.work.weixin.qq.com/document/path/96267
+func (u User) GetUserId(mobile string) (UserGetUserIdResp, error) {
+	var resp UserGetUserIdResp
+	err := u.HttpPostJsonAssign("/cgi-bin/user/getuserid", userGetUserIdReq{Mobile: mobile}, &resp)
+	if err != nil {
+		return UserGetUserIdResp{}, err
 	}
 	return resp, nil
 }

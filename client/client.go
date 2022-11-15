@@ -64,7 +64,7 @@ func (c *Client) HttpPostJsonAssign(path string, body interface{}, assign interf
 	}
 	bodyResp := resp.Body()
 	err = json.Unmarshal(bodyResp, &assign)
-	logrus.Debug(fmt.Sprintf("resty Get: %v, assign:%v", queryHost, util.JsonMarshalIndent(assign)))
+	logrus.Debug(fmt.Sprintf("resty PostJson: %v, assign:%v", queryHost, util.JsonMarshalIndent(assign)))
 	return err
 }
 

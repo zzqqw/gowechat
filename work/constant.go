@@ -55,12 +55,17 @@ type UserDetailWechatChannel struct {
 	Status   string `json:"status"`
 }
 
-// UserIdReq get请求userid的数据
-type UserIdReq struct {
-	UserId string `url:"userid"`
+// UserIds get请求userid的数据
+type UserIds struct {
+	UserId string `url:"userid" json:"userid"`
 }
 
-// UserIdReq get请求department_id的数据
-type DepartmentIdReq struct {
+// DepartmentIds get请求department_id的数据
+type DepartmentIds struct {
 	DepartmentId string `url:"department_id"`
+}
+
+type CursorLimit struct {
+	Cursor string `url:"cursor" json:"cursor"`
+	Limit  int64  `url:"limit" json:"limit"`
 }
