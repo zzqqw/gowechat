@@ -3,7 +3,7 @@ package work
 import "gowechat/client"
 
 type User struct {
-	*contactClinet
+	*ContactClinet
 }
 
 func NewUser(work WechatWork) *User {

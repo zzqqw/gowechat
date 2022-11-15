@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-type contactClinet struct {
+type ContactClinet struct {
 	client.Client
 }
 
@@ -27,16 +27,15 @@ type withAccessToken struct {
 	AccessToken string `url:"access_token"`
 }
 
-func NewContactClinet(wk WechatWork) *contactClinet {
-	c := client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)
-	cc := contactClinet{*c}
+func NewContactClinet(wk WechatWork) *ContactClinet {
+	cc := ContactClinet{*client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)}
 	cc.Token.SetGetTokenFunc(cc.getToken)
 	go cc.Token.TokenRefresher(context.Background())
 	cc.SetUrlQuery(withAccessToken{AccessToken: cc.Token.GetTokenStr()})
 	return &cc
 }
 
-func (c *contactClinet) getToken() (client.TokenInfo, error) {
+func (c *ContactClinet) getToken() (client.TokenInfo, error) {
 	var object = accessTokenResp{}
 	var req = accessTokenReq{CorpID: c.WxId, CorpSecret: c.WxSecret}
 	err := c.HttpGetAssign("/cgi-bin/gettoken", req, &object)
