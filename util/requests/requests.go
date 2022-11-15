@@ -26,8 +26,8 @@ type Media struct {
 	stream   io.Reader
 }
 
-func NewRequests() Requests {
-	return Requests{
+func NewRequests() *Requests {
+	return &Requests{
 		resty: resty.NewWithClient(&http.Client{}),
 	}
 }

@@ -22,21 +22,24 @@ type accessTokenReq struct {
 	CorpID     string `url:"corpid"`
 	CorpSecret string `url:"corpsecret"`
 }
+type withAccessToken struct {
+	AccessToken string `url:"access_token"`
+}
 
 func NewContactClinet(wk WechatWork) *contactClinet {
-	base := client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)
-	c := contactClinet{base}
-	base.SetGetTokenFunc(c.getToken)
-	c.TokenRefresher()
-	return &c
+	c := client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)
+	cc := contactClinet{*c}
+	cc.Token.SetGetTokenFunc(cc.getToken)
+	cc.SetWithGetReq(withAccessToken{AccessToken: cc.Token.GetTokenStr()})
+	//c.Requests.Req = append(c.Requests.Req, withAccessToken{AccessToken: cc.Token.GetTokenStr()})
+	return &cc
 }
 
 func (c *contactClinet) getToken() (client.TokenInfo, error) {
 	var object = accessTokenResp{}
-	var req = accessTokenReq{CorpID: c.WechatId, CorpSecret: c.Secret}
-	err := c.Req.SetPath("/cgi-bin/gettoken").SetBaseURL(workBaseUrl).SetGetReq(req).GetForObject(&object)
+	var req = accessTokenReq{CorpID: c.WxId, CorpSecret: c.WxSecret}
+	err := c.Requests.SetPath("/cgi-bin/gettoken").SetBaseURL(workBaseUrl).SetGetReq(req).GetForObject(&object)
 	if err != nil {
-
 		return client.TokenInfo{}, err
 	}
 	//40013 排查方法: 需确认CorpID是否填写正确，在 web管理端-设置 可查看

@@ -19,11 +19,11 @@ type Token struct {
 	GetTokenFunc func() (TokenInfo, error)
 }
 
-func (t *Token) setGetTokenFunc(f func() (TokenInfo, error)) {
+func (t *Token) SetGetTokenFunc(f func() (TokenInfo, error)) {
 	t.GetTokenFunc = f
 }
 
-func (t *Token) getToken() string {
+func (t *Token) GetTokenStr() string {
 	// intensive mutex juggling action
 	t.Mutex.RLock()
 	if t.TokenStr == "" {
@@ -49,7 +49,7 @@ func (t *Token) syncToken() error {
 	return nil
 }
 
-func (t *Token) tokenRefresher(ctx context.Context) {
+func (t *Token) TokenRefresher(ctx context.Context) {
 	// refresh per 30m
 	const refreshTimeWindow = (2*60 - 30) * time.Minute
 	const minRefreshDuration = 5 * time.Second
