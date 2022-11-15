@@ -1,6 +1,7 @@
 package client
 
 import (
+	"context"
 	"gowechat/util/requests"
 	"sync"
 )
@@ -27,6 +28,11 @@ func NewClient(BaseUrl, wechatId, secret string) Client {
 // SetGetTokenFunc 设置获取token函数
 func (c Client) SetGetTokenFunc(f func() (TokenInfo, error)) {
 	c.Token.setGetTokenFunc(f)
+}
+
+// TokenRefresher 刷新token
+func (c Client) TokenRefresher() {
+	go c.Token.tokenRefresher(context.Background())
 }
 
 // WithTokenGet 携带token进行get请求

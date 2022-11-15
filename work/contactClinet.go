@@ -27,6 +27,7 @@ func NewContactClinet(wk WechatWork) *contactClinet {
 	base := client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)
 	c := contactClinet{base}
 	base.SetGetTokenFunc(c.getToken)
+	c.TokenRefresher()
 	return &c
 }
 

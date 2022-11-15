@@ -57,8 +57,7 @@ func (t *Token) tokenRefresher(ctx context.Context) {
 	for {
 		select {
 		case <-time.After(waitDuration):
-			retryer := backoff.WithContext(backoff.NewExponentialBackOff(), ctx)
-			if err := backoff.Retry(t.syncToken, retryer); err != nil {
+			if err := backoff.Retry(t.syncToken, backoff.WithContext(backoff.NewExponentialBackOff(), ctx)); err != nil {
 				logrus.Error("retry getting access toke failed err=" + err.Error())
 				_ = err
 			}
