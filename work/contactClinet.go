@@ -1,6 +1,7 @@
 package work
 
 import (
+	"context"
 	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
@@ -30,8 +31,8 @@ func NewContactClinet(wk WechatWork) *contactClinet {
 	c := client.NewClient(workBaseUrl, wk.config.CorpID, wk.config.ContactSecret)
 	cc := contactClinet{*c}
 	cc.Token.SetGetTokenFunc(cc.getToken)
+	go cc.Token.TokenRefresher(context.Background())
 	cc.SetWithGetReq(withAccessToken{AccessToken: cc.Token.GetTokenStr()})
-	//c.Requests.Req = append(c.Requests.Req, withAccessToken{AccessToken: cc.Token.GetTokenStr()})
 	return &cc
 }
 
