@@ -7,8 +7,7 @@ type User struct {
 }
 
 func NewUser(work WechatWork) *User {
-	c := NewContactClinet(work)
-	u := &User{c}
+	u := &User{NewContactClinet(work)}
 	return u
 }
 
@@ -95,13 +94,18 @@ func (u User) Simplelist(DepartmentId string) (client.BaseResp, error) {
 	return resp, nil
 }
 
+type userListResp struct {
+	client.BaseResp
+	UserList []UserDetail `json:"userlist"`
+}
+
 // List 获取部门成员详情
 // List https://developer.work.weixin.qq.com/document/path/90201
-func (u User) List(DepartmentId string) (client.BaseResp, error) {
-	var resp client.BaseResp
+func (u User) List(DepartmentId string) (userListResp, error) {
+	var resp userListResp
 	err := u.HttpGetAssign("/cgi-bin/user/simplelist", DepartmentIdReq{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return userListResp{}, err
 	}
 	return resp, nil
 }
