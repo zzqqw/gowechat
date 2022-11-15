@@ -12,58 +12,8 @@ func NewUser(work WechatWork) *User {
 	return u
 }
 
-type UserIdReq struct {
-	UserId string `url:"userid"`
-}
-type DepartmentIdReq struct {
-	DepartmentId string `url:"department_id"`
-}
-
 type UserCreateReq struct {
-	UserId           string             `json:"userid"`
-	Name             string             `json:"name"`
-	Alias            string             `json:"alias"`
-	Mobile           string             `json:"mobile"`
-	Department       []int64            `json:"department"`
-	Order            []int64            `json:"order"`
-	Position         string             `json:"position"`
-	Gender           string             `json:"gender"`
-	Email            string             `json:"email"`
-	BizMail          string             `json:"biz_mail"`
-	IsLeaderInDept   []int64            `json:"is_leader_in_dept"`
-	DirectLeader     []string           `json:"direct_leader"`
-	Enable           int64              `json:"enable"`
-	AvatarMediaid    string             `json:"avatar_mediaid"`
-	Telephone        string             `json:"telephone"`
-	Address          string             `json:"address"`
-	MainDepartment   string             `json:"main_department"`
-	ToInvite         bool               `json:"to_invite"`
-	ExternalPosition string             `json:"external_position"`
-	Extattr          ExtattrsReq        `json:"extattr"`
-	ExternalProfile  ExternalProfileReq `json:"external_profile"`
-}
-type ExternalProfileReq struct {
-	ExternalCorpName string             `json:"external_corp_name"`
-	WechatChannels   []WechatChannelReq `json:"wechat_channels"`
-}
-type WechatChannelReq struct {
-	Nickname string `json:"nickname"`
-}
-type ExtattrReq struct {
-	Type int            `json:"type"`
-	Name string         `json:"name"`
-	Text ExtattrTextReq `json:"text"`
-	Web  ExtattrWebReq  `json:"web"`
-}
-type ExtattrWebReq struct {
-	Url   string `json:"url"`
-	Title string `json:"title"`
-}
-type ExtattrTextReq struct {
-	Value string `json:"value"`
-}
-type ExtattrsReq struct {
-	Attrs []extattrResp `json:"attrs"`
+	UserDetail
 }
 
 // Create 创建成员
@@ -77,44 +27,9 @@ func (u User) Create(req UserCreateReq) (client.BaseResp, error) {
 	return resp, nil
 }
 
-type extattrResp struct {
-	Type int             `json:"type"`
-	Name string          `json:"name"`
-	Text extattrTextResp `json:"text"`
-	Web  extattrWebResp  `json:"web"`
-}
-type extattrWebResp struct {
-	Url   string `json:"url"`
-	Title string `json:"title"`
-}
-type extattrTextResp struct {
-	Value string `json:"value"`
-}
-type extattrsResp struct {
-	Attrs []extattrResp `json:"attrs"`
-}
-type externalProfilesResp struct {
-	ExternalCorpName string        `json:"external_corp_name"`
-	ExternalAttr     []extattrResp `json:"external_attr"`
-}
 type userGetResp struct {
 	client.BaseResp
-	UserID          string               `json:"userid"`
-	Name            string               `json:"name"`
-	Department      []int64              `json:"department"`
-	Position        string               `json:"position"`
-	Status          int                  `json:"status"`
-	IsLeader        int                  `json:"isleader"`
-	Extattr         extattrsResp         `json:"extattr"`
-	TelePhone       string               `json:"telephone"`
-	Enable          int                  `json:"enable"`
-	HideMobile      int                  `json:"hide_mobile"`
-	Order           []uint32             `json:"order"`
-	MainDepartment  int                  `json:"main_department"`
-	Alias           string               `json:"alias"`
-	IsLeaderInDept  []uint32             `json:"is_leader_in_dept"`
-	DirectLeader    []string             `json:"direct_leader"`
-	ExternalProfile externalProfilesResp `json:"external_profile"`
+	UserDetail
 }
 
 // Get 读取成员
@@ -129,27 +44,7 @@ func (u User) Get(userId string) (userGetResp, error) {
 }
 
 type UserUpdateReq struct {
-	UserId           string             `json:"userid"`
-	Name             string             `json:"name"`
-	Alias            string             `json:"alias"`
-	Mobile           string             `json:"mobile"`
-	Department       []int64            `json:"department"`
-	Order            []int64            `json:"order"`
-	Position         string             `json:"position"`
-	Gender           string             `json:"gender"`
-	Email            string             `json:"email"`
-	BizMail          string             `json:"biz_mail"`
-	IsLeaderInDept   []int64            `json:"is_leader_in_dept"`
-	DirectLeader     []string           `json:"direct_leader"`
-	Enable           int64              `json:"enable"`
-	AvatarMediaid    string             `json:"avatar_mediaid"`
-	Telephone        string             `json:"telephone"`
-	Address          string             `json:"address"`
-	MainDepartment   int                `json:"main_department"`
-	ToInvite         bool               `json:"to_invite"`
-	ExternalPosition string             `json:"external_position"`
-	Extattr          ExtattrsReq        `json:"extattr"`
-	ExternalProfile  ExternalProfileReq `json:"external_profile"`
+	UserDetail
 }
 
 // Update 更新成员

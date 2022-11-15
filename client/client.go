@@ -24,7 +24,7 @@ func NewClient(BaseUrl, wechatId, secret string) Client {
 	return c
 }
 
-// 设置获取token函数
+// SetGetTokenFunc 设置获取token函数
 func (c Client) SetGetTokenFunc(f func() (TokenInfo, error)) {
 	c.Token.setGetTokenFunc(f)
 }

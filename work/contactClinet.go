@@ -33,10 +33,7 @@ func NewContactClinet(wk WechatWork) *contactClinet {
 func (c *contactClinet) getToken() (client.TokenInfo, error) {
 	var object = accessTokenResp{}
 	var req = accessTokenReq{CorpID: c.WechatId, CorpSecret: c.Secret}
-	err := c.Req.SetPath("/cgi-bin/gettoken").
-		SetBaseURL(workBaseUrl).
-		SetGetReq(req).
-		GetForObject(&object)
+	err := c.Req.SetPath("/cgi-bin/gettoken").SetBaseURL(workBaseUrl).SetGetReq(req).GetForObject(&object)
 	if err != nil {
 
 		return client.TokenInfo{}, err

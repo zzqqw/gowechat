@@ -2,7 +2,6 @@ package client
 
 import (
 	"context"
-	"fmt"
 	"github.com/cenkalti/backoff"
 	"github.com/sirupsen/logrus"
 	"sync"
@@ -40,7 +39,6 @@ func (t *Token) getToken() string {
 func (t *Token) syncToken() error {
 	get, err := t.GetTokenFunc()
 	if err != nil {
-		fmt.Println("aaaa")
 		return err
 	}
 	t.Mutex.Lock()
