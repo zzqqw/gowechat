@@ -22,13 +22,14 @@ type Client struct {
 }
 
 func NewClient(url, id, secret string) *Client {
-	return &Client{
+	c := &Client{
 		BaseUrl:  url,
 		WxId:     id,
 		WxSecret: secret,
 		Token:    &Token{Mutex: &sync.RWMutex{}},
 		Resty:    resty.NewWithClient(&http.Client{}),
 	}
+	return c
 }
 
 // SetUrlQuery   添加get请求参数
