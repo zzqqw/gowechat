@@ -7,6 +7,7 @@ import (
 )
 
 const contactClientName = "contact"
+const workBaseUrl = "https://qyapi.weixin.qq.com"
 
 type accessTokenResp struct {
 	client.BaseResp

@@ -6,8 +6,6 @@ import (
 	"gowechat/constant"
 )
 
-const workBaseUrl = "https://qyapi.weixin.qq.com"
-
 type WechatWork struct {
 	clientName string
 	clients    map[string]*WorkClient
