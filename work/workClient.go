@@ -1,7 +1,6 @@
 package work
 
 import (
-	"context"
 	"errors"
 	"fmt"
 	"github.com/sirupsen/logrus"
@@ -37,9 +36,8 @@ func NewWorkClient(CorpID, ContactSecret string) *WorkClient {
 		ContactSecret: ContactSecret,
 		Client:        client.NewClient(workBaseUrl, CorpID, ContactSecret),
 	}
-	c.Client.Token.SetGetTokenFunc(c.getToken)
-	go c.Client.Token.TokenRefresher(context.Background())
-	c.Client.SetUrlQuery(withAccessToken{AccessToken: c.Client.Token.GetTokenStr()})
+	c.Client.SetGetTokenFunc(c.getToken)
+	c.Client.SetUrlQuery(withAccessToken{AccessToken: c.Client.GetToken()})
 	return &c
 }
 
@@ -57,7 +55,7 @@ func (c *WorkClient) getToken() (client.TokenInfo, error) {
 		logrus.Error(fmt.Sprintf("getToken errcode=%v,errmsg=%sv", object.ErrCode, object.ErrMsg))
 		return client.TokenInfo{}, errors.New(object.ErrMsg)
 	}
-	var tokenInfo = client.TokenInfo{TokenStr: object.AccessToken, ExpiresIn: time.Duration(object.ExpiresInSecs)}
-	logrus.Debug(fmt.Sprintf("contactClinet获取token，req=%v , resp=%v", util.JsonMarshalIndent(req), util.JsonMarshalIndent(tokenInfo)))
+	var tokenInfo = client.TokenInfo{Token: object.AccessToken, ExpiresIn: time.Duration(object.ExpiresInSecs)}
+	logrus.Debug(fmt.Sprintf("contactClinet获取token，req=%v , resp=%v", util.InterfaceToString(req), util.InterfaceToString(tokenInfo)))
 	return tokenInfo, nil
 }
