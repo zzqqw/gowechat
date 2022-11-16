@@ -58,7 +58,7 @@ func (c *Client) GetToken() string {
 	}
 	tokenInfo, err := c.GetTokenFunc()
 	if err != nil {
-		logrus.Error("retry getting access toke failed err=" + err.Error())
+		logrus.Error("getToken failed err=" + err.Error())
 		return ""
 	}
 	c.Cache.Set(c.TokenKey, tokenInfo.Token, (tokenInfo.ExpiresIn-10)*time.Second)
