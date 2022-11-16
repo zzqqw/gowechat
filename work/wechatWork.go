@@ -18,8 +18,6 @@ type WechatWork struct {
 	clients    map[string]*client.Client
 }
 
-const contactClient = "contact"
-
 type accessTokenResp struct {
 	client.BaseResp
 	AccessToken   string `json:"access_token"`
@@ -54,7 +52,7 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 		return tokenInfo, nil
 	})
 	go contact.Token.TokenRefresher(context.Background())
-	clients[contactClient] = contact
+	clients[contactClientName] = contact
 	wk.clients = clients
 	return &wk
 }
