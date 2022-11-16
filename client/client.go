@@ -50,9 +50,11 @@ func (c *Client) SetGetTokenFunc(f func() (TokenInfo, error)) {
 }
 
 func (c *Client) GetToken() string {
-	token, b := c.Cache.Get(c.TokenKey)
+	tokenInterface, b := c.Cache.Get(c.TokenKey)
 	if b {
-		return util.InterfaceToString(token)
+		token := util.InterfaceToString(tokenInterface)
+		logrus.Debug(fmt.Sprintf("Get Token for cache cahceKey:%v cacheValue:%v", c.TokenKey, token))
+		return token
 	}
 	tokenInfo, err := c.GetTokenFunc()
 	if err != nil {
@@ -60,6 +62,7 @@ func (c *Client) GetToken() string {
 		return ""
 	}
 	c.Cache.Set(c.TokenKey, tokenInfo.Token, (tokenInfo.ExpiresIn-10)*time.Second)
+	logrus.Debug(fmt.Sprintf("Get Token for Api cahceKey:%v cacheValue:%v", c.TokenKey, tokenInfo.Token))
 	return tokenInfo.Token
 }
 

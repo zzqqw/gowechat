@@ -2,10 +2,7 @@ package work
 
 import (
 	"errors"
-	"fmt"
-	"github.com/sirupsen/logrus"
 	"gowechat/client"
-	"gowechat/util"
 	"time"
 )
 
@@ -52,10 +49,8 @@ func (c *WorkClient) getToken() (client.TokenInfo, error) {
 		return client.TokenInfo{}, err
 	}
 	if object.ErrCode == 40013 || object.ErrCode == 42001 || object.ErrCode == 640014 {
-		logrus.Error(fmt.Sprintf("getToken errcode=%v,errmsg=%sv", object.ErrCode, object.ErrMsg))
 		return client.TokenInfo{}, errors.New(object.ErrMsg)
 	}
 	var tokenInfo = client.TokenInfo{Token: object.AccessToken, ExpiresIn: time.Duration(object.ExpiresInSecs)}
-	logrus.Debug(fmt.Sprintf("contactClinet获取token，req=%v , resp=%v", util.InterfaceToString(req), util.InterfaceToString(tokenInfo)))
 	return tokenInfo, nil
 }
