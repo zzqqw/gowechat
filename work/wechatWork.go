@@ -4,6 +4,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gowechat/client"
 	"gowechat/constant"
+	"sync"
 )
 
 type WechatWork struct {
@@ -11,12 +12,22 @@ type WechatWork struct {
 	clients    map[string]*WorkClient
 }
 
+var (
+	WechatWorkInstance *WechatWork
+	once               = &sync.Once{}
+)
+
 func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
-	wk := WechatWork{}
-	clients := make(map[string]*WorkClient)
-	clients[contactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
-	wk.clients = clients
-	return &wk
+	if WechatWorkInstance == nil {
+		once.Do(func() {
+			wk := WechatWork{}
+			clients := make(map[string]*WorkClient)
+			clients[contactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
+			wk.clients = clients
+			WechatWorkInstance = &wk
+		})
+	}
+	return WechatWorkInstance
 }
 
 func (c WechatWork) User() *User {
