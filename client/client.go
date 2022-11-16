@@ -13,7 +13,7 @@ import (
 )
 
 type Client struct {
-	BaseUrl  string
+	Url      string
 	UrlQuery []interface{}
 	WxId     string
 	WxSecret string
@@ -23,7 +23,7 @@ type Client struct {
 
 func NewClient(url, id, secret string) *Client {
 	c := &Client{
-		BaseUrl:  url,
+		Url:      url,
 		WxId:     id,
 		WxSecret: secret,
 		Token:    &Token{Mutex: &sync.RWMutex{}},
@@ -70,7 +70,7 @@ func (c *Client) HttpPostJsonAssign(path string, body interface{}, assign interf
 }
 
 func (c *Client) composeReqUrl(path string, req []interface{}) string {
-	urls, err := url.Parse(c.BaseUrl)
+	urls, err := url.Parse(c.Url)
 	if err != nil {
 		panic(err)
 	}
