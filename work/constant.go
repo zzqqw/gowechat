@@ -46,13 +46,13 @@ type UserDetailExtattrs struct {
 	Attrs []UserDetailExtattr `json:"attrs"`
 }
 type UserDetailExternalProfiles struct {
-	ExternalCorpName string                    `json:"external_corp_name"`
-	ExternalAttr     []UserDetailExtattr       `json:"external_attr"`
-	WechatChannels   []UserDetailWechatChannel `json:"wechat_channels"`
+	ExternalCorpName string                  `json:"external_corp_name"`
+	ExternalAttr     []UserDetailExtattr     `json:"external_attr"`
+	WechatChannels   UserDetailWechatChannel `json:"wechat_channels"`
 }
 type UserDetailWechatChannel struct {
 	Nickname string `json:"nickname"`
-	Status   string `json:"status"`
+	Status   int    `json:"status"`
 }
 
 // UserIds get请求userid的数据
