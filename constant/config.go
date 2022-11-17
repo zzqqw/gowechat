@@ -9,6 +9,8 @@ type WorkConfig struct {
 	AgentSecret string `json:"agent_secret" validate:"required"`
 	// ContactSecret 通讯录secret
 	ContactSecret string `json:"contact_secret" validate:"required"`
+	// CustomerSecret 客户联系secret
+	CustomerSecret string `json:"customer_secret" validate:"required"`
 	// CallbackToken 企业微信事件回调Token
 	CallbackToken string `json:"callback_token" validate:"required"`
 	// CallbackAesKey 企业微信事件回调AesKey

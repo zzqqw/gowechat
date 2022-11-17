@@ -22,7 +22,8 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 		once.Do(func() {
 			wk := WechatWork{}
 			clients := make(map[string]*WorkClient)
-			clients[contactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
+			clients[ContactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
+			clients[CustomerClientName] = NewWorkClient(cfg.CorpID, cfg.CustomerSecret)
 			wk.clients = clients
 			WechatWorkInstance = &wk
 		})
@@ -33,8 +34,10 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 func (c WechatWork) User() *User {
 	return NewUser(c)
 }
-
-func (c WechatWork) GetClient(clientName string) *client.Client {
+func (c WechatWork) Department() *Department {
+	return NewDepartment(c)
+}
+func (c WechatWork) getClient(clientName string) *client.Client {
 	ct := c.clients[clientName]
 	if ct == nil {
 		logrus.Error(clientName + " Client not registered")

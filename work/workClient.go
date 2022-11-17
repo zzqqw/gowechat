@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-const contactClientName = "contact"
+const ContactClientName = "contact"
+const CustomerClientName = "customer"
 const workBaseUrl = "https://qyapi.weixin.qq.com"
 
 type accessTokenResp struct {
