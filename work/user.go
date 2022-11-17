@@ -157,3 +157,27 @@ func (u User) GetUserId(mobile string) (UserGetUserIdResp, error) {
 	}
 	return resp, nil
 }
+
+type GetUseridByEmailReq struct {
+	Email     string `json:"email"`
+	EmailType int    `json:"email_type"`
+}
+type GetUseridByEmailResp struct {
+	client.BaseResp
+	UserIds
+}
+
+// GetUseridByEmail  邮箱获取userid
+// GetUseridByEmail  https://developer.work.weixin.qq.com/document/path/95895
+func (u User) GetUseridByEmail(email string, emailTypes ...int) (GetUseridByEmailResp, error) {
+	var resp GetUseridByEmailResp
+	emailType := 1
+	if len(emailTypes) == 1 {
+		emailType = emailTypes[0]
+	}
+	err := u.GetClient(contactClientName).HttpPostJsonAssign("/cgi-bin/user/get_userid_by_email", GetUseridByEmailReq{Email: email, EmailType: emailType}, &resp)
+	if err != nil {
+		return GetUseridByEmailResp{}, err
+	}
+	return resp, nil
+}
