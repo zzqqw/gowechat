@@ -35,7 +35,7 @@ func NewWorkClient(CorpID, ContactSecret string) *WorkClient {
 		Client:        client.NewClient(workBaseUrl, CorpID, ContactSecret),
 	}
 	c.Client.SetGetTokenFunc(c.getToken)
-	go c.Client.GetToken()
+	//go c.Client.GetToken()
 	return &c
 }
 
