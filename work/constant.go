@@ -64,3 +64,8 @@ type DepartmentDetail struct {
 	Order            int      `json:"order"`
 	DepartmentLeader []string `json:"department_leader"`
 }
+
+type TagDetail struct {
+	TagId   int    `json:"tagid"`
+	TagName string `json:"tagname"`
+}

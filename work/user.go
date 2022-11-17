@@ -33,7 +33,7 @@ func (u *User) Create(req UserCreateReq) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/user/create", req, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -49,7 +49,7 @@ func (u *User) Get(userId string) (UserGetResp, error) {
 	var resp UserGetResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/get", UserIds{userId}, &resp)
 	if err != nil {
-		return UserGetResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -64,7 +64,7 @@ func (u *User) Update(req UserUpdateReq) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/create", req, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -75,7 +75,7 @@ func (u *User) Delete(userId string) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/delete", UserIds{userId}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -90,7 +90,7 @@ func (u *User) BatchDelete(UseridList []string) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/user/batchdelete", UserBatchDeleteReq{UseridList: UseridList}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -101,7 +101,7 @@ func (u *User) Simplelist(DepartmentId string) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -117,7 +117,7 @@ func (u *User) List(DepartmentId string) (UserListResp, error) {
 	var resp UserListResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
-		return UserListResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -133,7 +133,7 @@ func (u *User) ConvertToOpenid(userId string) (UserConverToOpenidResp, error) {
 	var resp UserConverToOpenidResp
 	err := u.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/user/convert_to_openid", UserIds{userId}, &resp)
 	if err != nil {
-		return UserConverToOpenidResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -144,7 +144,7 @@ func (u *User) Authsucc(userId string) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/user/authsucc", UserIds{userId}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -163,7 +163,7 @@ func (u *User) GetUserId(mobile string) (UserGetUserIdResp, error) {
 	var resp UserGetUserIdResp
 	err := u.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/user/getuserid", userGetUserIdReq{Mobile: mobile}, &resp)
 	if err != nil {
-		return UserGetUserIdResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -187,7 +187,7 @@ func (u *User) GetUseridByEmail(email string, emailTypes ...int) (GetUseridByEma
 	}
 	err := u.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/user/get_userid_by_email", GetUseridByEmailReq{Email: email, EmailType: emailType}, &resp)
 	if err != nil {
-		return GetUseridByEmailResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }

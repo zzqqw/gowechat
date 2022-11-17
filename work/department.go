@@ -26,7 +26,7 @@ func (u *Department) Create(req DepartmentDetail) (DepartmentCreateResp, error) 
 	var resp DepartmentCreateResp
 	err := u.work.GetClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/create", req, &resp)
 	if err != nil {
-		return DepartmentCreateResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -37,7 +37,7 @@ func (u *Department) Update(req DepartmentDetail) (client.BaseResp, error) {
 	var resp client.BaseResp
 	err := u.work.GetClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/update", req, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -50,7 +50,7 @@ func (u *Department) Delete(id int) (client.BaseResp, error) {
 		Id: id,
 	}, &resp)
 	if err != nil {
-		return client.BaseResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -71,7 +71,7 @@ func (u *Department) List(id ...int) (DepartmentListResp, error) {
 	}
 	err = c.HttpGetAssign("/cgi-bin/department/list", nil, &resp)
 	if err != nil {
-		return DepartmentListResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -91,7 +91,7 @@ func (u *Department) SimpleList(id ...int) (DepartmentSimpleListResp, error) {
 	}
 	err := u.work.GetClient(CustomerClientName).HttpGetAssign("/cgi-bin/department/simplelist", req, &resp)
 	if err != nil {
-		return DepartmentSimpleListResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
@@ -111,7 +111,7 @@ func (u *Department) Get(id ...int) (DepartmentGetResp, error) {
 	}
 	err := u.work.GetClient(CustomerClientName).HttpGetAssign("/cgi-bin/department/get", req, &resp)
 	if err != nil {
-		return DepartmentGetResp{}, err
+		return resp, err
 	}
 	return resp, nil
 }
