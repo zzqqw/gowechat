@@ -13,8 +13,48 @@ func NewDepartment(work WechatWork) *Department {
 }
 
 type DepartmentIds struct {
-	Id int `url:"id"`
+	Id int `url:"id" json:"id"`
 }
+type DepartmentCreateResp struct {
+	client.BaseResp
+	DepartmentIds
+}
+
+// Create 创建部门
+// https://developer.work.weixin.qq.com/document/path/90205
+func (u Department) Create(req DepartmentDetail) (DepartmentCreateResp, error) {
+	var resp DepartmentCreateResp
+	err := u.getClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/create", req, &resp)
+	if err != nil {
+		return DepartmentCreateResp{}, err
+	}
+	return resp, nil
+}
+
+// Update 更新部门
+// https://developer.work.weixin.qq.com/document/path/90206
+func (u Department) Update(req DepartmentDetail) (client.BaseResp, error) {
+	var resp client.BaseResp
+	err := u.getClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/update", req, &resp)
+	if err != nil {
+		return client.BaseResp{}, err
+	}
+	return resp, nil
+}
+
+// Delete 删除部门
+// https://developer.work.weixin.qq.com/document/path/90207
+func (u Department) Delete(id int) (client.BaseResp, error) {
+	var resp client.BaseResp
+	err := u.getClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/delete", DepartmentIds{
+		Id: id,
+	}, &resp)
+	if err != nil {
+		return client.BaseResp{}, err
+	}
+	return resp, nil
+}
+
 type DepartmentListResp struct {
 	client.BaseResp
 	Department []DepartmentDetail `json:"department"`
@@ -24,11 +64,12 @@ type DepartmentListResp struct {
 // https://developer.work.weixin.qq.com/document/path/90208
 func (u Department) List(id ...int) (DepartmentListResp, error) {
 	var resp DepartmentListResp
-	var req = DepartmentIds{}
+	var err error
+	c := u.getClient(CustomerClientName)
 	if len(id) == 1 {
-		req.Id = id[0]
+		c.SetUrlQuery(DepartmentIds{Id: id[0]})
 	}
-	err := u.getClient(CustomerClientName).HttpGetAssign("/cgi-bin/department/list", req, &resp)
+	err = c.HttpGetAssign("/cgi-bin/department/list", nil, &resp)
 	if err != nil {
 		return DepartmentListResp{}, err
 	}
@@ -59,10 +100,6 @@ type DepartmentGetResp struct {
 	client.BaseResp
 	DepartmentDetail
 }
-
-//type DepartmentIds struct {
-//	Id int `url:"id"`
-//}
 
 // Get 获取部门列表
 // https://developer.work.weixin.qq.com/document/path/95351

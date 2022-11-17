@@ -59,6 +59,7 @@ type UserDetailWechatChannel struct {
 type DepartmentDetail struct {
 	ID               int      `json:"id"`
 	Name             string   `json:"name"`
+	NameEn           string   `json:"name_en"`
 	Parentid         int      `json:"parentid"`
 	Order            int      `json:"order"`
 	DepartmentLeader []string `json:"department_leader"`
