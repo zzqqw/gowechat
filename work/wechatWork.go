@@ -41,6 +41,7 @@ func (c WechatWork) getClient(clientName string) *client.Client {
 	ct := c.clients[clientName]
 	if ct == nil {
 		logrus.Error(clientName + " Client not registered")
+		return nil
 	}
 	ct.Client.SetUrlQuery(withAccessToken{AccessToken: ct.Client.GetToken()})
 	return ct.GetClient()
