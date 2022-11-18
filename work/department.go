@@ -69,7 +69,7 @@ func (u *Department) List(id ...int) (DepartmentListResp, error) {
 	if len(id) == 1 {
 		c.SetUrlQuery(DepartmentIds{Id: id[0]})
 	}
-	err = c.HttpGetAssign("/cgi-bin/department/list", nil, &resp)
+	err = c.SetUrlQueryValEmptyContinue().HttpGetAssign("/cgi-bin/department/list", nil, &resp)
 	if err != nil {
 		return resp, err
 	}

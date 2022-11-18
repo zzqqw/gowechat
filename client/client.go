@@ -50,6 +50,18 @@ func (c *Client) SetGetTokenFunc(f func() (TokenInfo, error)) {
 	c.GetTokenFunc = f
 }
 
+// SetUrlQuery   添加get请求参数
+func (c *Client) SetUrlQuery(urlQuery interface{}) *Client {
+	c.UrlQuery = append(c.UrlQuery, urlQuery)
+	return c
+}
+
+// SetUrlQueryValEmptyContinue UrlQueryValEmptyContinue 添加get请求参数
+func (c *Client) SetUrlQueryValEmptyContinue() *Client {
+	c.UrlQueryValEmptyContinue = true
+	return c
+}
+
 func (c *Client) GetToken() string {
 	tokenInterface, b := c.Cache.Get(c.TokenKey)
 	if b {
@@ -65,12 +77,6 @@ func (c *Client) GetToken() string {
 	c.Cache.Set(c.TokenKey, tokenInfo.Token, (tokenInfo.ExpiresIn-10)*time.Second)
 	logrus.Debug(fmt.Sprintf("Get Token for Api cahceKey:%v cacheValue:%v", c.TokenKey, tokenInfo.Token))
 	return tokenInfo.Token
-}
-
-// SetUrlQuery   添加get请求参数
-func (c *Client) SetUrlQuery(urlQuery interface{}) *Client {
-	c.UrlQuery = append(c.UrlQuery, urlQuery)
-	return c
 }
 
 // HttpGetAssign Get 请求并渲染struct
@@ -118,7 +124,7 @@ func (c *Client) composeReqUrl(path string, req []interface{}) string {
 		s := structs.New(queryStruct)
 		for f, valInterface := range s.Map() {
 			val := util.InterfaceToString(valInterface)
-			if c.UrlQueryValEmptyContinue {
+			if c.UrlQueryValEmptyContinue && (val == "" || val == "0") {
 				continue
 			}
 			rawQuery += s.Field(f).Tag("json") + "=" + url.QueryEscape(val) + "&"
