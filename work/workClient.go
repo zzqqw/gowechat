@@ -8,6 +8,7 @@ import (
 
 const ContactClientName = "contact"
 const CustomerClientName = "customer"
+const AgentClientName = "agent"
 const workBaseUrl = "https://qyapi.weixin.qq.com"
 
 type AccessTokenResp struct {
@@ -22,30 +23,25 @@ type AccessTokenReq struct {
 type WithAccessToken struct {
 	AccessToken string `json:"access_token"`
 }
-
-type WorkClient struct {
-	CorpID        string
-	ContactSecret string
-	Client        *client.Client
+type WithAgentId struct {
+	AgentId int64 `json:"agentid"`
 }
 
-func NewWorkClient(CorpID, ContactSecret string) *WorkClient {
+type WorkClient struct {
+	Client *client.Client
+}
+
+func NewWorkClient(wxId, wxSecret string) *WorkClient {
 	c := WorkClient{
-		CorpID:        CorpID,
-		ContactSecret: ContactSecret,
-		Client:        client.NewClient(workBaseUrl, CorpID, ContactSecret),
+		Client: client.NewClient(workBaseUrl, wxId, wxSecret),
 	}
 	c.Client.SetGetTokenFunc(c.getToken)
 	//go c.Client.GetToken()
 	return &c
 }
-
-func (c *WorkClient) GetClient() *client.Client {
-	return c.Client
-}
 func (c *WorkClient) getToken() (client.TokenInfo, error) {
 	var object = AccessTokenResp{}
-	var req = AccessTokenReq{CorpID: c.CorpID, CorpSecret: c.ContactSecret}
+	var req = AccessTokenReq{CorpID: c.Client.WxId, CorpSecret: c.Client.WxSecret}
 	err := c.Client.HttpGetAssign("/cgi-bin/gettoken", req, &object)
 	if err != nil {
 		return client.TokenInfo{}, err

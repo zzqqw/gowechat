@@ -8,6 +8,7 @@ import (
 )
 
 type WechatWork struct {
+	Cfg        constant.WorkConfig
 	clientName string
 	clients    map[string]*WorkClient
 }
@@ -20,10 +21,11 @@ var (
 func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 	if WechatWorkInstance == nil {
 		once.Do(func() {
-			wk := WechatWork{}
+			wk := WechatWork{Cfg: cfg}
 			clients := make(map[string]*WorkClient)
 			clients[ContactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
 			clients[CustomerClientName] = NewWorkClient(cfg.CorpID, cfg.CustomerSecret)
+			clients[AgentClientName] = NewWorkClient(cfg.CorpID, cfg.AgentSecret)
 			wk.clients = clients
 			WechatWorkInstance = &wk
 		})
@@ -47,6 +49,10 @@ func (c *WechatWork) GetClient(clientName string) *client.Client {
 		logrus.Error(clientName + " Client not registered")
 		return nil
 	}
-	ct.Client.SetUrlQuery(WithAccessToken{AccessToken: ct.Client.GetToken()})
-	return ct.GetClient()
+	nameClient := ct.Client
+	nameClient.SetUrlQuery(WithAccessToken{AccessToken: ct.Client.GetToken()})
+	if clientName == AgentClientName {
+		nameClient.SetUrlQuery(WithAgentId{AgentId: c.Cfg.AgentID})
+	}
+	return nameClient
 }

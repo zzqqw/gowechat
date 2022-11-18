@@ -30,11 +30,11 @@ type TokenInfo struct {
 	ExpiresIn time.Duration `json:"expires_in"`
 }
 
-func NewClient(url, id, secret string) *Client {
+func NewClient(url, wxId, wxSecret string) *Client {
 	c := &Client{
 		Url:      url,
-		WxId:     id,
-		WxSecret: secret,
+		WxId:     wxId,
+		WxSecret: wxSecret,
 		Resty:    resty.NewWithClient(&http.Client{}),
 		// Create a cache with a default expiration time of 5 minutes, and which
 		// purges expired items every 10 minutes
