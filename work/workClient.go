@@ -39,16 +39,16 @@ func NewWorkClient(wxId, wxSecret string) *WorkClient {
 	//go c.Client.GetToken()
 	return &c
 }
-func (c *WorkClient) getToken() (client.TokenInfo, error) {
+func (c *WorkClient) getToken() (token client.TokenInfo, err error) {
 	var object = AccessTokenResp{}
-	var req = AccessTokenReq{CorpID: c.Client.WxId, CorpSecret: c.Client.WxSecret}
-	err := c.Client.HttpGetAssign("/cgi-bin/gettoken", req, &object)
+	err = c.Client.HttpGetAssign("/cgi-bin/gettoken", AccessTokenReq{CorpID: c.Client.WxId, CorpSecret: c.Client.WxSecret}, &object)
 	if err != nil {
-		return client.TokenInfo{}, err
+		return token, err
 	}
 	if object.ErrCode == 40013 || object.ErrCode == 42001 || object.ErrCode == 640014 {
-		return client.TokenInfo{}, errors.New(object.ErrMsg)
+		return token, errors.New(object.ErrMsg)
 	}
-	var tokenInfo = client.TokenInfo{Token: object.AccessToken, ExpiresIn: time.Duration(object.ExpiresInSecs)}
-	return tokenInfo, nil
+	token.Token = object.AccessToken
+	token.ExpiresIn = time.Duration(object.ExpiresInSecs)
+	return token, nil
 }
