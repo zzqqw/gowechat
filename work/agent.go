@@ -39,9 +39,8 @@ type AgentGetAllowTags struct {
 
 // Get  获取指定的应用详情
 // https://developer.work.weixin.qq.com/document/path/90227
-func (b *Agent) Get() (AgentGetRep, error) {
-	var resp AgentGetRep
-	err := b.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/agent/get", nil, &resp)
+func (b *Agent) Get() (resp AgentGetRep, err error) {
+	err = b.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/agent/get", nil, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -50,9 +49,8 @@ func (b *Agent) Get() (AgentGetRep, error) {
 
 // Set  设置应用
 // https://developer.work.weixin.qq.com/document/path/90228
-func (b *Agent) Set() (AgentGetRep, error) {
-	var resp AgentGetRep
-	err := b.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/agent/set", nil, &resp)
+func (b *Agent) Set(req AgentGetRep) (resp client.BaseResp, err error) {
+	err = b.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/agent/set", req, &resp)
 	if err != nil {
 		return resp, err
 	}

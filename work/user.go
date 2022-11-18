@@ -28,9 +28,8 @@ type UserCreateReq struct {
 
 // Create 创建成员
 // https://developer.work.weixin.qq.com/document/path/90195
-func (u *User) Create(req UserCreateReq) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/create", req, &resp)
+func (u *User) Create(req UserCreateReq) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/create", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -44,9 +43,8 @@ type UserGetResp struct {
 
 // Get 读取成员
 // Get https://developer.work.weixin.qq.com/document/path/90196
-func (u *User) Get(userId string) (UserGetResp, error) {
-	var resp UserGetResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/get", UserIds{userId}, &resp)
+func (u *User) Get(userId string) (resp UserGetResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/get", UserIds{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -59,9 +57,8 @@ type UserUpdateReq struct {
 
 // Update 更新成员
 // Update https://developer.work.weixin.qq.com/document/path/90197
-func (u *User) Update(req UserUpdateReq) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/create", req, &resp)
+func (u *User) Update(req UserUpdateReq) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/create", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -70,9 +67,8 @@ func (u *User) Update(req UserUpdateReq) (client.BaseResp, error) {
 
 // Delete 删除成员
 // Delete https://developer.work.weixin.qq.com/document/path/90198
-func (u *User) Delete(userId string) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/delete", UserIds{userId}, &resp)
+func (u *User) Delete(userId string) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/delete", UserIds{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -85,9 +81,8 @@ type UserBatchDeleteReq struct {
 
 // BatchDelete 批量删除成员
 // BatchDelete https://developer.work.weixin.qq.com/document/path/90199
-func (u *User) BatchDelete(UseridList []string) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/batchdelete", UserBatchDeleteReq{UseridList: UseridList}, &resp)
+func (u *User) BatchDelete(UseridList []string) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/batchdelete", UserBatchDeleteReq{UseridList: UseridList}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -96,9 +91,8 @@ func (u *User) BatchDelete(UseridList []string) (client.BaseResp, error) {
 
 // Simplelist 获取部门成员
 // Simplelist  https://developer.work.weixin.qq.com/document/path/90200
-func (u *User) Simplelist(DepartmentId string) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
+func (u *User) Simplelist(DepartmentId string) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -112,9 +106,8 @@ type UserListResp struct {
 
 // List 获取部门成员详情
 // List https://developer.work.weixin.qq.com/document/path/90201
-func (u *User) List(DepartmentId string) (UserListResp, error) {
-	var resp UserListResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
+func (u *User) List(DepartmentId string) (resp UserListResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/simplelist", UserDepartmentId{DepartmentId: DepartmentId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -128,9 +121,8 @@ type UserConverToOpenidResp struct {
 
 // ConvertToOpenid userid与openid互换
 // ConvertToOpenid  https://developer.work.weixin.qq.com/document/path/90202
-func (u *User) ConvertToOpenid(userId string) (UserConverToOpenidResp, error) {
-	var resp UserConverToOpenidResp
-	err := u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/convert_to_openid", UserIds{userId}, &resp)
+func (u *User) ConvertToOpenid(userId string) (resp UserConverToOpenidResp, err error) {
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/convert_to_openid", UserIds{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -139,9 +131,8 @@ func (u *User) ConvertToOpenid(userId string) (UserConverToOpenidResp, error) {
 
 // Authsucc 二次验证
 // Authsucc  https://developer.work.weixin.qq.com/document/path/90203
-func (u *User) Authsucc(userId string) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/authsucc", UserIds{userId}, &resp)
+func (u *User) Authsucc(userId string) (resp client.BaseResp, err error) {
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/authsucc", UserIds{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -158,9 +149,8 @@ type UserGetUserIdResp struct {
 
 // GetUserId Getuserid 手机号获取userid
 // GetUserId  https://developer.work.weixin.qq.com/document/path/96267
-func (u *User) GetUserId(mobile string) (UserGetUserIdResp, error) {
-	var resp UserGetUserIdResp
-	err := u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/getuserid", userGetUserIdReq{Mobile: mobile}, &resp)
+func (u *User) GetUserId(mobile string) (resp UserGetUserIdResp, err error) {
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/getuserid", userGetUserIdReq{Mobile: mobile}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -178,13 +168,12 @@ type GetUseridByEmailResp struct {
 
 // GetUseridByEmail  邮箱获取userid
 // GetUseridByEmail  https://developer.work.weixin.qq.com/document/path/95895
-func (u *User) GetUseridByEmail(email string, emailTypes ...int) (GetUseridByEmailResp, error) {
-	var resp GetUseridByEmailResp
+func (u *User) GetUseridByEmail(email string, emailTypes ...int) (resp GetUseridByEmailResp, err error) {
 	emailType := 1
 	if len(emailTypes) == 1 {
 		emailType = emailTypes[0]
 	}
-	err := u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/get_userid_by_email", GetUseridByEmailReq{Email: email, EmailType: emailType}, &resp)
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/get_userid_by_email", GetUseridByEmailReq{Email: email, EmailType: emailType}, &resp)
 	if err != nil {
 		return resp, err
 	}

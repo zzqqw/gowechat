@@ -21,9 +21,8 @@ type TagCreateResp struct {
 
 // Create 创建标签
 // https://developer.work.weixin.qq.com/document/path/90210
-func (t *Tag) Create(req TagDetail) (TagCreateResp, error) {
-	var resp TagCreateResp
-	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/create", req, &resp)
+func (t *Tag) Create(req TagDetail) (resp TagCreateResp, err error) {
+	err = t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/create", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -32,9 +31,8 @@ func (t *Tag) Create(req TagDetail) (TagCreateResp, error) {
 
 // Update 更新标签名字
 // https://developer.work.weixin.qq.com/document/path/90211
-func (t *Tag) Update(req TagDetail) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/update", req, &resp)
+func (t *Tag) Update(req TagDetail) (resp client.BaseResp, err error) {
+	err = t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/update", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -43,9 +41,8 @@ func (t *Tag) Update(req TagDetail) (client.BaseResp, error) {
 
 // Delete  更新标签名字
 // https://developer.work.weixin.qq.com/document/path/90212
-func (t *Tag) Delete(req TagId) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/delete", req, &resp)
+func (t *Tag) Delete(req TagId) (resp client.BaseResp, err error) {
+	err = t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/delete", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -60,9 +57,8 @@ type TagGetResp struct {
 
 // get  获取标签成员
 // https://developer.work.weixin.qq.com/document/path/90213
-func (t *Tag) get(req TagId) (TagGetResp, error) {
-	var resp TagGetResp
-	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/get", req, &resp)
+func (t *Tag) get(req TagId) (resp TagGetResp, err error) {
+	err = t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/get", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -77,9 +73,8 @@ type TagUsersAddOrDel struct {
 
 // AddTagUsers  增加标签成员
 // https://developer.work.weixin.qq.com/document/path/90214
-func (t *Tag) AddTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/addtagusers", req, &resp)
+func (t *Tag) AddTagUsers(req TagUsersAddOrDel) (resp client.BaseResp, err error) {
+	err = t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/addtagusers", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -88,9 +83,8 @@ func (t *Tag) AddTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
 
 // DelTagUsers  删除标签成员
 // https://developer.work.weixin.qq.com/document/path/90215
-func (t *Tag) DelTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
-	var resp client.BaseResp
-	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/deltagusers", req, &resp)
+func (t *Tag) DelTagUsers(req TagUsersAddOrDel) (resp client.BaseResp, err error) {
+	err = t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/deltagusers", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -104,9 +98,8 @@ type TagListResp struct {
 
 // List 获取标签列表
 // https://developer.work.weixin.qq.com/document/path/90216
-func (t *Tag) List() (TagListResp, error) {
-	var resp TagListResp
-	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/list", nil, &resp)
+func (t *Tag) List() (resp TagListResp, err error) {
+	err = t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/list", nil, &resp)
 	if err != nil {
 		return resp, err
 	}
