@@ -131,7 +131,6 @@ func (c *Client) composeReqUrl(path string, req []interface{}) string {
 			rawQuery += s.Field(f).Tag("json") + "=" + url.QueryEscape(val) + "&"
 		}
 	}
-	fmt.Println(rawQuery)
 	urls.RawQuery = rawQuery
 	return urls.String()
 }
