@@ -56,7 +56,7 @@ func (c *Client) SetUrlQuery(urlQuery interface{}) *Client {
 	return c
 }
 
-// SetUrlQueryValEmptyContinue UrlQueryValEmptyContinue 添加get请求参数
+// SetUrlQueryValEmptyContinue UrlQueryValEmptyContinue 过滤UrlQuery中value为空的数据
 func (c *Client) SetUrlQueryValEmptyContinue() *Client {
 	c.UrlQueryValEmptyContinue = true
 	return c
