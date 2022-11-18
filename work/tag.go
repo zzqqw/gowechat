@@ -7,8 +7,7 @@ type Tag struct {
 }
 
 func NewTag(work *WechatWork) *Tag {
-	t := Tag{work}
-	return &t
+	return &Tag{work}
 }
 
 type TagId struct {

@@ -7,8 +7,7 @@ type Batch struct {
 }
 
 func NewBatch(work *WechatWork) *Batch {
-	b := Batch{work}
-	return &b
+	return &Batch{work}
 }
 
 type JobId struct {

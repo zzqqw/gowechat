@@ -19,8 +19,7 @@ type UserDepartmentId struct {
 }
 
 func NewUser(work *WechatWork) *User {
-	u := &User{work}
-	return u
+	return &User{work}
 }
 
 type UserCreateReq struct {
