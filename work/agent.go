@@ -48,7 +48,7 @@ func (b *Agent) Get() (AgentGetRep, error) {
 	return resp, nil
 }
 
-// Set  获取指定的应用详情
+// Set  设置应用
 // https://developer.work.weixin.qq.com/document/path/90228
 func (b *Agent) Set() (AgentGetRep, error) {
 	var resp AgentGetRep
