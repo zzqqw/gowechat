@@ -23,16 +23,18 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 		once.Do(func() {
 			wk := WechatWork{Cfg: cfg}
 			clients := make(map[string]*WorkClient)
-			clients[ContactClientName] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
-			clients[CustomerClientName] = NewWorkClient(cfg.CorpID, cfg.CustomerSecret)
-			clients[AgentClientName] = NewWorkClient(cfg.CorpID, cfg.AgentSecret)
+			clients[ClientNameContact] = NewWorkClient(cfg.CorpID, cfg.ContactSecret)
+			clients[ClientNameCustomer] = NewWorkClient(cfg.CorpID, cfg.CustomerSecret)
+			clients[ClientNameAgent] = NewWorkClient(cfg.CorpID, cfg.AgentSecret)
 			wk.clients = clients
 			WechatWorkInstance = &wk
 		})
 	}
 	return WechatWorkInstance
 }
-
+func (c *WechatWork) Agent() *Agent {
+	return NewAgent(c)
+}
 func (c *WechatWork) User() *User {
 	return NewUser(c)
 }
@@ -42,7 +44,6 @@ func (c *WechatWork) Department() *Department {
 func (c *WechatWork) Tag() *Tag {
 	return NewTag(c)
 }
-
 func (c *WechatWork) GetClient(clientName string) *client.Client {
 	ct := c.clients[clientName]
 	if ct == nil {
@@ -51,7 +52,7 @@ func (c *WechatWork) GetClient(clientName string) *client.Client {
 	}
 	nameClient := ct.Client
 	nameClient.SetUrlQuery(WithAccessToken{AccessToken: ct.Client.GetToken()})
-	if clientName == AgentClientName {
+	if clientName == ClientNameAgent {
 		nameClient.SetUrlQuery(WithAgentId{AgentId: c.Cfg.AgentID})
 	}
 	return nameClient

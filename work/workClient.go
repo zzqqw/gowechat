@@ -6,9 +6,9 @@ import (
 	"time"
 )
 
-const ContactClientName = "contact"
-const CustomerClientName = "customer"
-const AgentClientName = "agent"
+const ClientNameContact = "contact"
+const ClientNameCustomer = "customer"
+const ClientNameAgent = "agent"
 const workBaseUrl = "https://qyapi.weixin.qq.com"
 
 type AccessTokenResp struct {
@@ -41,7 +41,7 @@ func NewWorkClient(wxId, wxSecret string) *WorkClient {
 }
 func (c *WorkClient) getToken() (token client.TokenInfo, err error) {
 	var object = AccessTokenResp{}
-	err = c.Client.HttpGetAssign("/cgi-bin/gettoken", AccessTokenReq{CorpID: c.Client.WxId, CorpSecret: c.Client.WxSecret}, &object)
+	err = c.Client.GetAssign("/cgi-bin/gettoken", AccessTokenReq{CorpID: c.Client.WxId, CorpSecret: c.Client.WxSecret}, &object)
 	if err != nil {
 		return token, err
 	}

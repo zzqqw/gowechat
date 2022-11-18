@@ -34,7 +34,7 @@ type SyncCallback struct {
 // https://developer.work.weixin.qq.com/document/path/90980
 func (b *Batch) SyncUser(req SyncUser) (SyncResp, error) {
 	var resp SyncResp
-	err := b.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/batch/syncuser", req, &resp)
+	err := b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/batch/syncuser", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -45,7 +45,7 @@ func (b *Batch) SyncUser(req SyncUser) (SyncResp, error) {
 // https://developer.work.weixin.qq.com/document/path/90981
 func (b *Batch) ReplaceUser(req SyncUser) (SyncResp, error) {
 	var resp SyncResp
-	err := b.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/batch/replaceuser", req, &resp)
+	err := b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/batch/replaceuser", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -61,7 +61,7 @@ type ReplaceParty struct {
 // https://developer.work.weixin.qq.com/document/path/90982
 func (b *Batch) ReplaceParty(req ReplaceParty) (SyncResp, error) {
 	var resp SyncResp
-	err := b.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/tag/replaceparty", req, &resp)
+	err := b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/replaceparty", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -90,8 +90,8 @@ type SyncGetResultResp struct {
 // https://developer.work.weixin.qq.com/document/path/90983
 func (b *Batch) GetResult(jobId string) (SyncGetResult, error) {
 	var resp SyncGetResult
-	err := b.work.GetClient(ContactClientName).
-		HttpGetAssign("/cgi-bin/tag/getresult", JobId{JobId: jobId}, &resp)
+	err := b.work.GetClient(ClientNameContact).
+		GetAssign("/cgi-bin/tag/getresult", JobId{JobId: jobId}, &resp)
 	if err != nil {
 		return resp, err
 	}

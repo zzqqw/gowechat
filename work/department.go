@@ -24,7 +24,7 @@ type DepartmentCreateResp struct {
 // https://developer.work.weixin.qq.com/document/path/90205
 func (u *Department) Create(req DepartmentDetail) (DepartmentCreateResp, error) {
 	var resp DepartmentCreateResp
-	err := u.work.GetClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/create", req, &resp)
+	err := u.work.GetClient(ClientNameCustomer).PostJsonAssign("/cgi-bin/department/create", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -35,7 +35,7 @@ func (u *Department) Create(req DepartmentDetail) (DepartmentCreateResp, error) 
 // https://developer.work.weixin.qq.com/document/path/90206
 func (u *Department) Update(req DepartmentDetail) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := u.work.GetClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/update", req, &resp)
+	err := u.work.GetClient(ClientNameCustomer).PostJsonAssign("/cgi-bin/department/update", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -46,7 +46,7 @@ func (u *Department) Update(req DepartmentDetail) (client.BaseResp, error) {
 // https://developer.work.weixin.qq.com/document/path/90207
 func (u *Department) Delete(id int) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := u.work.GetClient(CustomerClientName).HttpPostJsonAssign("/cgi-bin/department/delete", DepartmentIds{
+	err := u.work.GetClient(ClientNameCustomer).PostJsonAssign("/cgi-bin/department/delete", DepartmentIds{
 		Id: id,
 	}, &resp)
 	if err != nil {
@@ -65,11 +65,11 @@ type DepartmentListResp struct {
 func (u *Department) List(id ...int) (DepartmentListResp, error) {
 	var resp DepartmentListResp
 	var err error
-	c := u.work.GetClient(CustomerClientName)
+	c := u.work.GetClient(ClientNameCustomer)
 	if len(id) == 1 {
 		c.SetUrlQuery(DepartmentIds{Id: id[0]})
 	}
-	err = c.SetUrlQueryValEmptyContinue().HttpGetAssign("/cgi-bin/department/list", nil, &resp)
+	err = c.SetUrlQueryValEmptyContinue().GetAssign("/cgi-bin/department/list", nil, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -89,7 +89,7 @@ func (u *Department) SimpleList(id ...int) (DepartmentSimpleListResp, error) {
 	if len(id) == 1 {
 		req.Id = id[0]
 	}
-	err := u.work.GetClient(CustomerClientName).HttpGetAssign("/cgi-bin/department/simplelist", req, &resp)
+	err := u.work.GetClient(ClientNameCustomer).GetAssign("/cgi-bin/department/simplelist", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -109,7 +109,7 @@ func (u *Department) Get(id ...int) (DepartmentGetResp, error) {
 	if len(id) == 1 {
 		req.Id = id[0]
 	}
-	err := u.work.GetClient(CustomerClientName).HttpGetAssign("/cgi-bin/department/get", req, &resp)
+	err := u.work.GetClient(ClientNameCustomer).GetAssign("/cgi-bin/department/get", req, &resp)
 	if err != nil {
 		return resp, err
 	}

@@ -79,8 +79,8 @@ func (c *Client) GetToken() string {
 	return tokenInfo.Token
 }
 
-// HttpGetAssign Get 请求并渲染struct
-func (c *Client) HttpGetAssign(path string, req interface{}, assign interface{}) error {
+// GetAssign Get 请求并渲染struct
+func (c *Client) GetAssign(path string, req interface{}, assign interface{}) error {
 	reqs := append(c.UrlQuery, req)
 	queryHost := c.composeReqUrl(path, reqs)
 	resp, err := c.Resty.R().Get(queryHost)
@@ -93,8 +93,8 @@ func (c *Client) HttpGetAssign(path string, req interface{}, assign interface{})
 	return err
 }
 
-// HttpPostJsonAssign  Post 请求并渲染struct
-func (c *Client) HttpPostJsonAssign(path string, body interface{}, assign interface{}) error {
+// PostJsonAssign  Post 请求并渲染struct
+func (c *Client) PostJsonAssign(path string, body interface{}, assign interface{}) error {
 	queryHost := c.composeReqUrl(path, c.UrlQuery)
 	resp, err := c.Resty.
 		SetHeader("Content-Type", "application/json").

@@ -24,7 +24,7 @@ type TagCreateResp struct {
 // https://developer.work.weixin.qq.com/document/path/90210
 func (t *Tag) Create(req TagDetail) (TagCreateResp, error) {
 	var resp TagCreateResp
-	err := t.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/tag/create", req, &resp)
+	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/create", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -35,7 +35,7 @@ func (t *Tag) Create(req TagDetail) (TagCreateResp, error) {
 // https://developer.work.weixin.qq.com/document/path/90211
 func (t *Tag) Update(req TagDetail) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := t.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/tag/update", req, &resp)
+	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/update", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -46,7 +46,7 @@ func (t *Tag) Update(req TagDetail) (client.BaseResp, error) {
 // https://developer.work.weixin.qq.com/document/path/90212
 func (t *Tag) Delete(req TagId) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := t.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/tag/delete", req, &resp)
+	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/delete", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -63,7 +63,7 @@ type TagGetResp struct {
 // https://developer.work.weixin.qq.com/document/path/90213
 func (t *Tag) get(req TagId) (TagGetResp, error) {
 	var resp TagGetResp
-	err := t.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/tag/get", req, &resp)
+	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/get", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -80,7 +80,7 @@ type TagUsersAddOrDel struct {
 // https://developer.work.weixin.qq.com/document/path/90214
 func (t *Tag) AddTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := t.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/tag/addtagusers", req, &resp)
+	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/addtagusers", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -91,7 +91,7 @@ func (t *Tag) AddTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
 // https://developer.work.weixin.qq.com/document/path/90215
 func (t *Tag) DelTagUsers(req TagUsersAddOrDel) (client.BaseResp, error) {
 	var resp client.BaseResp
-	err := t.work.GetClient(ContactClientName).HttpPostJsonAssign("/cgi-bin/tag/deltagusers", req, &resp)
+	err := t.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/deltagusers", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -107,7 +107,7 @@ type TagListResp struct {
 // https://developer.work.weixin.qq.com/document/path/90216
 func (t *Tag) List() (TagListResp, error) {
 	var resp TagListResp
-	err := t.work.GetClient(ContactClientName).HttpGetAssign("/cgi-bin/tag/list", nil, &resp)
+	err := t.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/tag/list", nil, &resp)
 	if err != nil {
 		return resp, err
 	}

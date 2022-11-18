@@ -1,5 +1,16 @@
 package work
 
+type AgentDetail struct {
+	Agentid            int    `json:"agentid"`
+	ReportLocationFlag int    `json:"report_location_flag"`
+	LogoMediaid        string `json:"logo_mediaid"`
+	Name               string `json:"name"`
+	Description        string `json:"description"`
+	RedirectDomain     string `json:"redirect_domain"`
+	Isreportenter      int    `json:"isreportenter"`
+	HomeURL            string `json:"home_url"`
+}
+
 // UserDetail 客户详情
 type UserDetail struct {
 	UserID           string                     `json:"userid"`
