@@ -110,6 +110,7 @@ func (c *Client) HttpPostJsonAssign(path string, body interface{}, assign interf
 	return err
 }
 
+// 解析url 并拼装get请求参数
 func (c *Client) composeReqUrl(path string, req []interface{}) string {
 	urls, err := url.Parse(c.Url)
 	if err != nil {
