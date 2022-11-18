@@ -3,8 +3,8 @@ package client
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/fatih/structs"
 	"github.com/go-resty/resty/v2"
-	"github.com/google/go-querystring/query"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
 	"gowechat/util"
@@ -14,14 +14,15 @@ import (
 )
 
 type Client struct {
-	Url          string
-	UrlQuery     []interface{}
-	WxId         string
-	WxSecret     string
-	Resty        *resty.Client
-	GetTokenFunc func() (TokenInfo, error)
-	TokenKey     string
-	Cache        *cache.Cache
+	Url                      string
+	UrlQuery                 []interface{}
+	UrlQueryValEmptyContinue bool
+	WxId                     string
+	WxSecret                 string
+	Resty                    *resty.Client
+	GetTokenFunc             func() (TokenInfo, error)
+	TokenKey                 string
+	Cache                    *cache.Cache
 }
 
 type TokenInfo struct {
@@ -110,10 +111,20 @@ func (c *Client) composeReqUrl(path string, req []interface{}) string {
 	}
 	urls.Path = path
 	var rawQuery string
-	for i := range req {
-		values, _ := query.Values(req[i])
-		rawQuery += values.Encode() + "&"
+	for _, queryStruct := range req {
+		if queryStruct == nil {
+			continue
+		}
+		s := structs.New(queryStruct)
+		for f, valInterface := range s.Map() {
+			val := util.InterfaceToString(valInterface)
+			if c.UrlQueryValEmptyContinue {
+				continue
+			}
+			rawQuery += s.Field(f).Tag("json") + "=" + url.QueryEscape(val) + "&"
+		}
 	}
+	fmt.Println(rawQuery)
 	urls.RawQuery = rawQuery
 	return urls.String()
 }

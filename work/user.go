@@ -10,12 +10,12 @@ type User struct {
 
 // UserIds get请求userid的数据
 type UserIds struct {
-	UserId string `url:"userid" json:"userid"`
+	UserId string `json:"userid"`
 }
 
 // UserDepartmentId get请求department_id的数据
 type UserDepartmentId struct {
-	DepartmentId string `url:"department_id"`
+	DepartmentId string `json:"department_id"`
 }
 
 func NewUser(work *WechatWork) *User {
@@ -81,7 +81,7 @@ func (u *User) Delete(userId string) (client.BaseResp, error) {
 }
 
 type UserBatchDeleteReq struct {
-	UseridList []string `url:"useridlist"`
+	UseridList []string `json:"useridlist"`
 }
 
 // BatchDelete 批量删除成员

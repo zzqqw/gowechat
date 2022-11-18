@@ -13,7 +13,7 @@ func NewDepartment(work *WechatWork) *Department {
 }
 
 type DepartmentIds struct {
-	Id int `url:"id" json:"id"`
+	Id int `json:"id"`
 }
 type DepartmentCreateResp struct {
 	client.BaseResp

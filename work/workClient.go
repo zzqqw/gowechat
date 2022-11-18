@@ -10,17 +10,17 @@ const ContactClientName = "contact"
 const CustomerClientName = "customer"
 const workBaseUrl = "https://qyapi.weixin.qq.com"
 
-type accessTokenResp struct {
+type AccessTokenResp struct {
 	client.BaseResp
 	AccessToken   string `json:"access_token"`
 	ExpiresInSecs int64  `json:"expires_in"`
 }
-type accessTokenReq struct {
-	CorpID     string `url:"corpid"`
-	CorpSecret string `url:"corpsecret"`
+type AccessTokenReq struct {
+	CorpID     string `json:"corpid"`
+	CorpSecret string `json:"corpsecret"`
 }
-type withAccessToken struct {
-	AccessToken string `url:"access_token"`
+type WithAccessToken struct {
+	AccessToken string `json:"access_token"`
 }
 
 type WorkClient struct {
@@ -44,8 +44,8 @@ func (c *WorkClient) GetClient() *client.Client {
 	return c.Client
 }
 func (c *WorkClient) getToken() (client.TokenInfo, error) {
-	var object = accessTokenResp{}
-	var req = accessTokenReq{CorpID: c.CorpID, CorpSecret: c.ContactSecret}
+	var object = AccessTokenResp{}
+	var req = AccessTokenReq{CorpID: c.CorpID, CorpSecret: c.ContactSecret}
 	err := c.Client.HttpGetAssign("/cgi-bin/gettoken", req, &object)
 	if err != nil {
 		return client.TokenInfo{}, err
