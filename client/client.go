@@ -7,7 +7,8 @@ import (
 	"github.com/go-resty/resty/v2"
 	"github.com/patrickmn/go-cache"
 	"github.com/sirupsen/logrus"
-	"gowechat/util"
+	"gowechat/helper/conv"
+	"gowechat/helper/crypto/md5"
 	"net/http"
 	"net/url"
 	"time"
@@ -42,7 +43,11 @@ func NewClient(url, wxId, wxSecret string) *Client {
 		//每10分钟清除过期项目
 		Cache: cache.New(5*time.Minute, 10*time.Minute),
 	}
-	c.TokenKey = c.WxId + ":" + util.EncryptForMd5(c.WxSecret+c.Url)
+	encryptString, err := md5.EncryptString(c.WxSecret + c.Url)
+	if err != nil {
+		encryptString = c.WxSecret + c.Url
+	}
+	c.TokenKey = c.WxId + ":" + encryptString
 	return c
 }
 
@@ -65,7 +70,7 @@ func (c *Client) SetUrlQueryValEmptyContinue() *Client {
 func (c *Client) GetToken() string {
 	tokenInterface, b := c.Cache.Get(c.TokenKey)
 	if b {
-		token := util.InterfaceToString(tokenInterface)
+		token := conv.String(tokenInterface)
 		logrus.Debug(fmt.Sprintf("Get Token for cache cahceKey:%v cacheValue:%v", c.TokenKey, token))
 		return token
 	}
@@ -89,7 +94,7 @@ func (c *Client) GetAssign(path string, req interface{}, assign interface{}) err
 	}
 	bodyResp := resp.Body()
 	err = json.Unmarshal(bodyResp, &assign)
-	logrus.Debug(fmt.Sprintf("resty Get: %v, assign:%v", queryHost, util.InterfaceToString(assign)))
+	logrus.Debug(fmt.Sprintf("resty Get: %v, assign:%v", queryHost, conv.String(assign)))
 	return err
 }
 
@@ -106,7 +111,7 @@ func (c *Client) PostJsonAssign(path string, body interface{}, assign interface{
 	}
 	bodyResp := resp.Body()
 	err = json.Unmarshal(bodyResp, &assign)
-	logrus.Debug(fmt.Sprintf("resty PostJson: %v, assign:%v", queryHost, util.InterfaceToString(assign)))
+	logrus.Debug(fmt.Sprintf("resty PostJson: %v, assign:%v", queryHost, conv.String(assign)))
 	return err
 }
 
@@ -124,7 +129,7 @@ func (c *Client) composeReqUrl(path string, req []interface{}) string {
 		}
 		s := structs.New(queryStruct)
 		for f, valInterface := range s.Map() {
-			val := util.InterfaceToString(valInterface)
+			val := conv.String(valInterface)
 			if c.UrlQueryValEmptyContinue && (val == "" || val == "0") {
 				continue
 			}
