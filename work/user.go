@@ -8,8 +8,8 @@ type User struct {
 	work *WechatWork
 }
 
-// UserIds get请求userid的数据
-type UserIds struct {
+// UserId  get请求userid的数据
+type UserId struct {
 	UserId string `json:"userid"`
 }
 
@@ -44,7 +44,7 @@ type UserGetResp struct {
 // Get 读取成员
 // Get https://developer.work.weixin.qq.com/document/path/90196
 func (u *User) Get(userId string) (resp UserGetResp, err error) {
-	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/get", UserIds{userId}, &resp)
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/get", UserId{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -68,7 +68,7 @@ func (u *User) Update(req UserUpdateReq) (resp client.BaseResp, err error) {
 // Delete 删除成员
 // Delete https://developer.work.weixin.qq.com/document/path/90198
 func (u *User) Delete(userId string) (resp client.BaseResp, err error) {
-	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/delete", UserIds{userId}, &resp)
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/delete", UserId{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -122,7 +122,7 @@ type UserConverToOpenidResp struct {
 // ConvertToOpenid userid与openid互换
 // ConvertToOpenid  https://developer.work.weixin.qq.com/document/path/90202
 func (u *User) ConvertToOpenid(userId string) (resp UserConverToOpenidResp, err error) {
-	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/convert_to_openid", UserIds{userId}, &resp)
+	err = u.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/user/convert_to_openid", UserId{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -132,7 +132,7 @@ func (u *User) ConvertToOpenid(userId string) (resp UserConverToOpenidResp, err 
 // Authsucc 二次验证
 // Authsucc  https://developer.work.weixin.qq.com/document/path/90203
 func (u *User) Authsucc(userId string) (resp client.BaseResp, err error) {
-	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/authsucc", UserIds{userId}, &resp)
+	err = u.work.GetClient(ClientNameContact).GetAssign("/cgi-bin/user/authsucc", UserId{userId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -144,7 +144,7 @@ type userGetUserIdReq struct {
 }
 type UserGetUserIdResp struct {
 	client.BaseResp
-	UserIds
+	UserId
 }
 
 // GetUserId Getuserid 手机号获取userid
@@ -163,7 +163,7 @@ type GetUseridByEmailReq struct {
 }
 type GetUseridByEmailResp struct {
 	client.BaseResp
-	UserIds
+	UserId
 }
 
 // GetUseridByEmail  邮箱获取userid
