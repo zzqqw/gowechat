@@ -52,10 +52,10 @@ type Oauth2GetUserInfoResp struct {
 	UserTicket string `json:"user_ticket"`
 }
 
-// GetUserinfo 获取访问用户身份
+// GetUserInfo 获取访问用户身份
 //https://developer.work.weixin.qq.com/document/path/91023
-func (o *Oauth2) GetUserinfo(code string) (resp Oauth2GetUserInfoResp, err error) {
-	err = o.work.GetClient(ClientNameAgent).GetAssign(fmt.Sprintf("/cgi-bin/auth/getuserinfo?code=%s", code), nil, resp)
+func (o *Oauth2) GetUserInfo(code string) (resp Oauth2GetUserInfoResp, err error) {
+	err = o.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/auth/getuserinfo", CodeReq{Code: code}, resp)
 	if err != nil {
 		return resp, err
 	}

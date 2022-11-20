@@ -80,3 +80,7 @@ type TagDetail struct {
 	TagId   int    `json:"tagid"`
 	TagName string `json:"tagname"`
 }
+
+type CodeReq struct {
+	Code string `json:"code"`
+}

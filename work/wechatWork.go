@@ -32,6 +32,13 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 	}
 	return WechatWorkInstance
 }
+
+func (c *WechatWork) Sso() *Sso {
+	return NewSso(c)
+}
+func (c *WechatWork) Oath2() *Oauth2 {
+	return NewOauth2(c)
+}
 func (c *WechatWork) Agent() *Agent {
 	return NewAgent(c)
 }
