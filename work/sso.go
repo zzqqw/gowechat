@@ -3,6 +3,7 @@ package work
 import (
 	"fmt"
 	"gowechat/client"
+	"gowechat/helper/encoding/url"
 )
 
 type Sso struct {
@@ -36,8 +37,8 @@ func (o *Sso) QrConnect(redirectUri string, states ...string) (resp QrConnectRes
 	resp.State = state
 
 	resp.LocationURL = fmt.Sprintf(
-		"%s/wwopen/sso/qrConnect?appid=%s&agentid=%s&redirect_uri=%s&state=%s",
-		workBaseUrl, resp.AppId, resp.AgentId, resp.RedirectUri, resp.State,
+		"%v/wwopen/sso/qrConnect?appid=%v&agentid=%v&redirect_uri=%v&state=%v",
+		workBaseUrl, resp.AppId, resp.AgentId, url.Encode(resp.RedirectUri), resp.State,
 	)
 	return resp
 }

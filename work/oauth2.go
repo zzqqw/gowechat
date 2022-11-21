@@ -40,7 +40,7 @@ func (o *Oauth2) Authorize(redirectUri string, states ...string) (resp Auth2Auth
 	resp.State = state
 	resp.AgentId = o.work.Cfg.AgentID
 	resp.LocationURL = fmt.Sprintf(
-		"%s/connect/oauth2/authorize?appid=%s&redirect_uri=%s&response_type=%s&scope=%s&state=%s&agentid=%s#wechat_redirect",
+		"%s/connect/oauth2/authorize?appid=%v&redirect_uri=%v&response_type=%v&scope=%v&state=%v&agentid=%v#wechat_redirect",
 		workBaseUrl, resp.AppId, url.Encode(redirectUri), resp.ResponseType, resp.Scope, state, resp.AgentId,
 	)
 	return resp
