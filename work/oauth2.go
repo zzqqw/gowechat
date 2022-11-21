@@ -15,13 +15,13 @@ func NewOauth2(work *WechatWork) *Oauth2 {
 }
 
 type Auth2AuthorizeResp struct {
-	LocationURL  string
-	RedirectUri  string
-	AppId        string
-	ResponseType string
-	AgentId      int64
-	State        string
-	Scope        string
+	LocationURL  string `json:"location_url"`
+	RedirectUri  string `json:"redirect_uri"`
+	AppId        string `json:"app_id"`
+	ResponseType string `json:"response_type"`
+	AgentId      int64  `json:"agent_id"`
+	State        string `json:"state"`
+	Scope        string `json:"scope"`
 }
 
 // Authorize 构造网页授权链接

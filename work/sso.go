@@ -15,11 +15,11 @@ func NewSso(work *WechatWork) *Sso {
 }
 
 type QrConnectResp struct {
-	LocationURL string
-	RedirectUri string
-	AppId       string
-	AgentId     int64
-	State       string
+	LocationURL string `json:"location_url"`
+	RedirectUri string `json:"redirect_uri"`
+	AppId       string `json:"app_id"`
+	AgentId     int64  `json:"agent_id"`
+	State       string `json:"state"`
 }
 
 // QrConnect 构造网页授权链接
