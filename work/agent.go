@@ -22,7 +22,7 @@ type AgentGetRep struct {
 }
 
 type AgentGetUser struct {
-	Userid string `json:"userid"`
+	UserId string `json:"userid"`
 }
 
 type AgentGetUsers struct {
@@ -30,11 +30,11 @@ type AgentGetUsers struct {
 }
 
 type AgentGetAllowPartys struct {
-	Partyid []int `json:"partyid"`
+	PartyId []int `json:"partyid"`
 }
 
 type AgentGetAllowTags struct {
-	Tagid []int `json:"tagid"`
+	TagId []int `json:"tagid"`
 }
 
 // Get  获取指定的应用详情

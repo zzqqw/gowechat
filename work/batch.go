@@ -74,7 +74,7 @@ type SyncGetResult struct {
 }
 type SyncResult []struct {
 	client.BaseResp
-	Userid string `json:"userid"`
+	UserId string `json:"userid"`
 }
 
 type SyncGetResultResp struct {
