@@ -8,16 +8,6 @@ type User struct {
 	work *WechatWork
 }
 
-// UserId  get请求userid的数据
-type UserId struct {
-	UserId string `json:"userid"`
-}
-
-// UserDepartmentId get请求department_id的数据
-type UserDepartmentId struct {
-	DepartmentId string `json:"department_id"`
-}
-
 func NewUser(work *WechatWork) *User {
 	return &User{work}
 }

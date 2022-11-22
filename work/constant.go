@@ -1,5 +1,17 @@
 package work
 
+import "gowechat/client"
+
+// UserId  get请求userid的数据
+type UserId struct {
+	UserId string `json:"userid"`
+}
+
+// UserDepartmentId get请求department_id的数据
+type UserDepartmentId struct {
+	DepartmentId string `json:"department_id"`
+}
+
 type AgentDetail struct {
 	Agentid            int    `json:"agentid"`
 	ReportLocationFlag int    `json:"report_location_flag"`
@@ -83,4 +95,12 @@ type TagDetail struct {
 
 type CodeReq struct {
 	Code string `json:"code"`
+}
+
+type JobId struct {
+	JobId string `json:"jobid"`
+}
+type JobIdResp struct {
+	client.BaseResp
+	JobId
 }

@@ -10,14 +10,6 @@ func NewBatch(work *WechatWork) *Batch {
 	return &Batch{work}
 }
 
-type JobId struct {
-	JobId string `json:"jobid"`
-}
-
-type SyncResp struct {
-	client.BaseResp
-	JobId
-}
 type SyncUser struct {
 	MediaID  string       `json:"media_id"`
 	ToInvite bool         `json:"to_invite"`
@@ -31,7 +23,7 @@ type SyncCallback struct {
 
 // SyncUser 增量更新成员
 // https://developer.work.weixin.qq.com/document/path/90980
-func (b *Batch) SyncUser(req SyncUser) (resp SyncResp, err error) {
+func (b *Batch) SyncUser(req SyncUser) (resp JobIdResp, err error) {
 	err = b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/batch/syncuser", req, &resp)
 	if err != nil {
 		return resp, err
@@ -41,7 +33,7 @@ func (b *Batch) SyncUser(req SyncUser) (resp SyncResp, err error) {
 
 // ReplaceUser 增量更新成员
 // https://developer.work.weixin.qq.com/document/path/90981
-func (b *Batch) ReplaceUser(req SyncUser) (resp SyncResp, err error) {
+func (b *Batch) ReplaceUser(req SyncUser) (resp JobIdResp, err error) {
 	err = b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/batch/replaceuser", req, &resp)
 	if err != nil {
 		return resp, err
@@ -56,7 +48,7 @@ type ReplaceParty struct {
 
 // ReplaceParty 全量覆盖部门
 // https://developer.work.weixin.qq.com/document/path/90982
-func (b *Batch) ReplaceParty(req ReplaceParty) (resp SyncResp, err error) {
+func (b *Batch) ReplaceParty(req ReplaceParty) (resp JobIdResp, err error) {
 	err = b.work.GetClient(ClientNameContact).PostJsonAssign("/cgi-bin/tag/replaceparty", req, &resp)
 	if err != nil {
 		return resp, err
@@ -75,11 +67,6 @@ type SyncGetResult struct {
 type SyncResult []struct {
 	client.BaseResp
 	UserId string `json:"userid"`
-}
-
-type SyncGetResultResp struct {
-	client.BaseResp
-	JobId
 }
 
 // GetResult 获取异步任务结果
