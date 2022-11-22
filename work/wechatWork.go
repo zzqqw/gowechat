@@ -39,6 +39,11 @@ func (c *WechatWork) Sso() *Sso {
 func (c *WechatWork) Oath2() *Oauth2 {
 	return NewOauth2(c)
 }
+
+func (c *WechatWork) Media() *Media {
+	return NewMedia(c)
+}
+
 func (c *WechatWork) Agent() *Agent {
 	return NewAgent(c)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"gowechat/helper/conv"
 	"gowechat/helper/crypto/md5"
+	"io"
 	"net/http"
 	"net/url"
 	"time"
@@ -112,6 +113,24 @@ func (c *Client) PostJsonAssign(path string, body interface{}, assign interface{
 	bodyResp := resp.Body()
 	err = json.Unmarshal(bodyResp, &assign)
 	logrus.Debug(fmt.Sprintf("resty PostJson: %v, assign:%v", queryHost, conv.String(assign)))
+	return err
+}
+
+type Media struct {
+	FileName string
+	Reader   io.Reader
+}
+
+// UploadAssign   Post 文件上传并渲染struct
+func (c *Client) UploadAssign(path string, param string, m Media, assign interface{}) error {
+	queryHost := c.composeReqUrl(path, c.UrlQuery)
+	resp, err := c.Resty.R().SetFileReader(param, m.FileName, m.Reader).Post(queryHost)
+	if err != nil {
+		return err
+	}
+	bodyResp := resp.Body()
+	err = json.Unmarshal(bodyResp, &assign)
+	logrus.Debug(fmt.Sprintf("resty Upload: %v, assign:%v", queryHost, conv.String(assign)))
 	return err
 }
 
