@@ -45,7 +45,7 @@ func (m *Media) Upload(fileName, mediaType string, buf []byte) (resp MediaUpload
 		},
 		Type: mediaType,
 	}
-	err = m.work.GetClient(ClientNameAgent).SetUrlQuery(req).UploadAssign("/cgi-bin/media/upload", "media", req.Media, resp)
+	err = m.work.GetClient(ClientNameAgent).SetUrlQuery(req).UploadAssign("/cgi-bin/media/upload", "media", req.Media, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -69,7 +69,7 @@ func (m *Media) UploadImg(fileName string, buf []byte) (resp MediaUploadImgResp,
 		FileName: fileName,
 		Reader:   bytes.NewReader(buf),
 	}
-	err = m.work.GetClient(ClientNameAgent).UploadAssign("/cgi-bin/media/uploadimg", "media", req, resp)
+	err = m.work.GetClient(ClientNameAgent).UploadAssign("/cgi-bin/media/uploadimg", "media", req, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -79,7 +79,7 @@ func (m *Media) UploadImg(fileName string, buf []byte) (resp MediaUploadImgResp,
 // Get 获取临时素材
 //https://developer.work.weixin.qq.com/document/path/90254
 func (m *Media) get(mediaId string) (resp client.BaseResp, err error) {
-	err = m.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/media/get", MediaId{MediaID: mediaId}, resp)
+	err = m.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/media/get", MediaId{MediaID: mediaId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -89,7 +89,7 @@ func (m *Media) get(mediaId string) (resp client.BaseResp, err error) {
 // GetJsSdk  获取高清语音素材
 //https://developer.work.weixin.qq.com/document/path/90255
 func (m *Media) getJsSdk(mediaId string) (resp client.BaseResp, err error) {
-	err = m.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/media/jssdk", MediaId{MediaID: mediaId}, resp)
+	err = m.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/media/jssdk", MediaId{MediaID: mediaId}, &resp)
 	if err != nil {
 		return resp, err
 	}
@@ -107,7 +107,7 @@ type MediaUploadByUrlReq struct {
 // UploadByUrl 异步上传临时素材
 //https://developer.work.weixin.qq.com/document/path/96219
 func (m *Media) UploadByUrl(req MediaUploadByUrlReq) (resp JobIdResp, err error) {
-	err = m.work.GetClient(ClientNameAgent).PostJsonAssign("/cgi-bin/media/upload_by_url", req, resp)
+	err = m.work.GetClient(ClientNameAgent).PostJsonAssign("/cgi-bin/media/upload_by_url", req, &resp)
 	if err != nil {
 		return resp, err
 	}

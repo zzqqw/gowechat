@@ -52,7 +52,7 @@ type SsoGetUserInfoResp struct {
 // GetUserInfo 获取访问用户身份
 //https://developer.work.weixin.qq.com/document/path/91437
 func (o *Sso) GetUserInfo(code string) (resp SsoGetUserInfoResp, err error) {
-	err = o.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/auth/getuserinfo", CodeReq{Code: code}, resp)
+	err = o.work.GetClient(ClientNameAgent).GetAssign("/cgi-bin/auth/getuserinfo", CodeReq{Code: code}, &resp)
 	if err != nil {
 		return resp, err
 	}

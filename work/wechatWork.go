@@ -33,6 +33,21 @@ func NewWechatWork(cfg constant.WorkConfig) *WechatWork {
 	return WechatWorkInstance
 }
 
+type GetApiDomainIp struct {
+	client.BaseResp
+	IPList []string `json:"ip_list"`
+}
+
+// GetApiDomainIp 获取企业微信API域名IP段
+//https://developer.work.weixin.qq.com/document/path/92520
+func (c *WechatWork) GetApiDomainIp() (resp GetApiDomainIp, err error) {
+	err = c.GetClient(ClientNameAgent).GetAssign("cgi-bin/get_api_domain_ip", nil, &resp)
+	if err != nil {
+		return resp, err
+	}
+	return resp, nil
+}
+
 func (c *WechatWork) Sso() *Sso {
 	return NewSso(c)
 }
@@ -43,7 +58,6 @@ func (c *WechatWork) Oath2() *Oauth2 {
 func (c *WechatWork) Media() *Media {
 	return NewMedia(c)
 }
-
 func (c *WechatWork) Agent() *Agent {
 	return NewAgent(c)
 }
