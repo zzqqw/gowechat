@@ -64,6 +64,11 @@ func (c *WechatWork) Agent() *Agent {
 func (c *WechatWork) User() *User {
 	return NewUser(c)
 }
+
+func (c *WechatWork) ExternalContact() *ExternalContact {
+	return NewExternalContact(c)
+}
+
 func (c *WechatWork) Department() *Department {
 	return NewDepartment(c)
 }
